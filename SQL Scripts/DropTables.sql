@@ -1,0 +1,13 @@
+DROP TABLE Intervencija;
+DROP TABLE OperacionaSala;
+DROP TABLE ObavljaPregled;
+DROP TABLE Pregled;
+DROP TABLE Pacijent;
+DROP TABLE MedicinskiTehnicar;
+DROP TABLE Doktor;
+DROP TABLE Spremacica;
+DROP TABLE Odeljenje;
+DROP TABLE Obezbedjenje;
+DROP TABLE ZdravstveniRadnik;
+DROP TABLE Zaposleni;
+DROP TABLE Bolnica;

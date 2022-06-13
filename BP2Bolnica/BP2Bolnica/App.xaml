@@ -1,0 +1,9 @@
+﻿<Application x:Class="BP2Bolnica.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:BP2Bolnica"
+             StartupUri="MainWindow.xaml" DispatcherUnhandledException="Application_DispatcherUnhandledException">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>

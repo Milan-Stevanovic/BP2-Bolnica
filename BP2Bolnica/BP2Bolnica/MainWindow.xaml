@@ -1,0 +1,427 @@
+﻿<Window x:Class="BP2Bolnica.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BP2Bolnica"
+        mc:Ignorable="d"
+         Title="Bolnica" Height="600" Width="1100" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <CollectionViewSource x:Key="bolnicaViewSource"/>
+        <CollectionViewSource x:Key="zaposleniViewSource"/>
+        <CollectionViewSource x:Key="zdravstveniRadnikViewSource"/>
+        <CollectionViewSource x:Key="obezbedjenjeViewSource"/>
+        <CollectionViewSource x:Key="spremacicaViewSource"/>
+        <CollectionViewSource x:Key="doktorViewSource"/>
+        <CollectionViewSource x:Key="medicinskiTehnicarViewSource"/>
+        <CollectionViewSource x:Key="pacijentViewSource"/>
+        <CollectionViewSource x:Key="pregledViewSource"/>
+        <CollectionViewSource x:Key="obavljaPregledViewSource"/>
+        <CollectionViewSource x:Key="intervencijaViewSource"/>
+        <CollectionViewSource x:Key="opercionaSalaViewSource"/>
+        <CollectionViewSource x:Key="odeljenjeViewSource"/>
+    </Window.Resources>
+    <Grid Background="#1C1C1C">
+        <TabControl Background="#1D1D1D" Margin="0,0,0,35">
+            <!-- BOLNICA -->
+            <TabItem Header="Bolnice">
+                <DataGrid x:Name="BolnicaDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource bolnicaViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding IdBolnice}" 
+                                                Header="ID"
+                                                IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding NazivBolnice}" 
+                                                Header="Naziv"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- ZAPOSLENI -->
+            <TabItem Header="Zaposleni">
+                <DataGrid x:Name="ZaposleniDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding IdZaposlenog}" 
+                                                Header="ID"
+                                                IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding JmbgZ}" 
+                                                Header="JMBG"/>
+                        <DataGridTextColumn Binding="{Binding ImeZ}" 
+                                                Header="Ime"/>
+                        <DataGridTextColumn Binding="{Binding PrezimeZ}" 
+                                                Header="Prezime"/>
+                        <DataGridTextColumn Binding="{Binding PlataZ}" 
+                                                Header="Plata (RSD)"/>
+
+                        <DataGridTextColumn Binding="{Binding TipZaposlenog}" 
+                                                Header="Tip Zaposlenog"/>
+
+                        <DataGridComboBoxColumn Header="Radi u Bolnici"
+                                                ItemsSource="{Binding Source={StaticResource bolnicaViewSource}}"
+                                                DisplayMemberPath="NazivBolnice"
+                                                SelectedValueBinding="{Binding IdBolnice}"
+                                                SelectedValuePath="IdBolnice"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- ZDRAVSTVENI RADNIK -->
+            <TabItem Header="Zdravstveni Radnik">
+                <DataGrid x:Name="ZdravstveniRadnikDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource zdravstveniRadnikViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="Ime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="ImeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Prezime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="PrezimeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridTextColumn Header="Broj Licence"
+                                            Binding="{Binding BrojLicence}"/>
+
+                        <DataGridTextColumn Header="Tip Zdravstvenog Radnika"
+                                            Binding="{Binding TipZdrRad}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- OBEZBEDJENJE -->
+            <TabItem Header="Obezbedjenje">
+                <DataGrid x:Name="ObezbedjenjeDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource obezbedjenjeViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="Ime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="ImeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Prezime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="PrezimeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridTextColumn Header="Dozvola Za Oruzje"
+                                            Binding="{Binding DozvolaZaOruzje}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- SPREMACICA -->
+            <TabItem Header="Spremacica">
+                <DataGrid x:Name="SpremacicaDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource spremacicaViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="Ime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="ImeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Prezime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="PrezimeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Odeljenje koje odrzava"
+                                                ItemsSource="{Binding Source={StaticResource odeljenjeViewSource}}"
+                                                DisplayMemberPath="NazivOdeljenja"
+                                                SelectedValueBinding="{Binding IdOdeljenja}"
+                                                SelectedValuePath="IdOdeljenja"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- DOKTOR -->
+            <TabItem Header="Doktor">
+                <DataGrid x:Name="DoktorDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource doktorViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="Ime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="ImeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Prezime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="PrezimeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridTextColumn Header="Specijalizacija"
+                                            Binding="{Binding Specijalizacija}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- MEDICINSKI TEHNICAR -->
+            <TabItem Header="Medicinski Tehnicar">
+                <DataGrid x:Name="MedicinskiTehnicarDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource medicinskiTehnicarViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="Ime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="ImeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Prezime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="PrezimeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- PACIJENT -->
+            <TabItem Header="Pacijent">
+                <DataGrid x:Name="PacijentDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource pacijentViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding JmbgP}" 
+                                                Header="JMBG"/>
+                        <DataGridTextColumn Binding="{Binding ImeP}" 
+                                                Header="Ime"/>
+                        <DataGridTextColumn Binding="{Binding PrezimeP}" 
+                                                Header="Prezime"/>
+                        <DataGridTextColumn Binding="{Binding BrojZdrKnjiz}" 
+                                                Header="Broj zdravstvene knjizice"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- PREGLED -->
+            <TabItem Header="Pregled">
+                <DataGrid x:Name="PregledDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource pregledViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding IdP}" 
+                                                Header="ID"/>
+                        <DataGridTextColumn Binding="{Binding DatumP}" 
+                                                Header="Datum"/>
+                        <DataGridTextColumn Binding="{Binding VremeP}" 
+                                                Header="Vreme"/>
+
+                        <DataGridComboBoxColumn Header="ID MedTeh Koji Zakazuje"
+                                                ItemsSource="{Binding Source={StaticResource medicinskiTehnicarViewSource}}"
+                                                DisplayMemberPath="IdZaposlenog"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"/>
+
+                        <DataGridComboBoxColumn Header="Broj Zdravstvene Knjizice"
+                                                ItemsSource="{Binding Source={StaticResource pacijentViewSource}}"
+                                                DisplayMemberPath="BrojZdrKnjiz"
+                                                SelectedValueBinding="{Binding BrojZdrKnjiz}"
+                                                SelectedValuePath="BrojZdrKnjiz"/>
+
+                        <DataGridComboBoxColumn Header="Pregled Zakazao Ime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="ImeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Pregled Zakazao Prezime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="PrezimeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Pacijent Ime"
+                                                ItemsSource="{Binding Source={StaticResource pacijentViewSource}}"
+                                                DisplayMemberPath="ImeP"
+                                                SelectedValueBinding="{Binding BrojZdrKnjiz}"
+                                                SelectedValuePath="BrojZdrKnjiz"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Pacijent Prezime"
+                                                ItemsSource="{Binding Source={StaticResource pacijentViewSource}}"
+                                                DisplayMemberPath="PrezimeP"
+                                                SelectedValueBinding="{Binding BrojZdrKnjiz}"
+                                                SelectedValuePath="BrojZdrKnjiz"
+                                                IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- OBAVLJA PREGLED -->
+            <TabItem Header="Obavlja Pregled">
+                <DataGrid x:Name="ObavljaPregledDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource obavljaPregledViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridComboBoxColumn Header="ID Doktora"
+                                                ItemsSource="{Binding Source={StaticResource doktorViewSource}}"
+                                                DisplayMemberPath="IdZaposlenog"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"/>
+
+                        <DataGridComboBoxColumn Header="Doktor Ime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="ImeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Doktor Prezime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="PrezimeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="ID Pregleda"
+                                                ItemsSource="{Binding Source={StaticResource pregledViewSource}}"
+                                                DisplayMemberPath="IdP"
+                                                SelectedValueBinding="{Binding IdP}"
+                                                SelectedValuePath="IdP"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- ODELJENJE -->
+            <TabItem Header="Odeljenje">
+                <DataGrid x:Name="OdeljenjeDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource odeljenjeViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding IdOdeljenja}" 
+                                                Header="ID"
+                                                IsReadOnly="True"/>
+                        <DataGridTextColumn Binding="{Binding NazivOdeljenja}" 
+                                                Header="Naziv Odeljenja"/>
+                        <DataGridTextColumn Binding="{Binding Sprat}" 
+                                                Header="Sprat"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- OPERACIONA SALA -->
+            <TabItem Header="Operaciona Sala">
+                <DataGrid x:Name="OperacionaSalaDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource opercionaSalaViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding RbSale}" 
+                                                Header="Rb. Sale"
+                                                IsReadOnly="True"/>
+
+                        <DataGridTextColumn Binding="{Binding NazivSale}" 
+                                                Header="Naziv Sale"/>
+
+                        <DataGridTextColumn Binding="{Binding ImaXray}" 
+                                                Header="Ima X-Ray"/>
+
+                        <DataGridComboBoxColumn Header="ID Odeljenja"
+                                                ItemsSource="{Binding Source={StaticResource odeljenjeViewSource}}"
+                                                DisplayMemberPath="IdOdeljenja"
+                                                SelectedValueBinding="{Binding IdOdeljenja}"
+                                                SelectedValuePath="IdOdeljenja"/>
+
+                        <DataGridComboBoxColumn Header="Sprat"
+                                                ItemsSource="{Binding Source={StaticResource odeljenjeViewSource}}"
+                                                DisplayMemberPath="Sprat"
+                                                SelectedValueBinding="{Binding IdOdeljenja}"
+                                                SelectedValuePath="IdOdeljenja"
+                                                IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+
+            <!-- INTERVENCIJA -->
+            <TabItem Header="Intervencija">
+                <DataGrid x:Name="IntervencijaDataGrid"
+                              AutoGenerateColumns="False"
+                              ItemsSource="{Binding Source={StaticResource intervencijaViewSource}}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding IdI}" 
+                                                Header="ID"
+                                                IsReadOnly="True"/>
+
+                        <DataGridTextColumn Binding="{Binding DatumI}" 
+                                                Header="Datum"/>
+
+                        <DataGridTextColumn Binding="{Binding VremeI}" 
+                                                Header="Vreme"/>
+
+                        <DataGridTextColumn Binding="{Binding TrajanjeI}" 
+                                                Header="Trajanje (min)"/>
+
+                        <DataGridComboBoxColumn Header="ID Doktora"
+                                                ItemsSource="{Binding Source={StaticResource doktorViewSource}}"
+                                                DisplayMemberPath="IdZaposlenog"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"/>
+
+                        <DataGridComboBoxColumn Header="Doktor Ime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="ImeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="Doktor Prezime"
+                                                ItemsSource="{Binding Source={StaticResource zaposleniViewSource}}"
+                                                DisplayMemberPath="PrezimeZ"
+                                                SelectedValueBinding="{Binding IdZaposlenog}"
+                                                SelectedValuePath="IdZaposlenog"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="ID Pregleda"
+                                                ItemsSource="{Binding Source={StaticResource pregledViewSource}}"
+                                                DisplayMemberPath="IdP"
+                                                SelectedValueBinding="{Binding IdP}"
+                                                SelectedValuePath="IdP"/>
+
+                        <DataGridTextColumn Binding="{Binding RbSale}" 
+                                                Header="Rb. Sale"
+                                                IsReadOnly="True"/>
+
+                        <DataGridComboBoxColumn Header="ID Odeljenja"
+                                                ItemsSource="{Binding Source={StaticResource odeljenjeViewSource}}"
+                                                DisplayMemberPath="IdOdeljenja"
+                                                SelectedValueBinding="{Binding IdOdeljenja}"
+                                                SelectedValuePath="IdOdeljenja"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        <Button Name="btnSave" Content="Save" Margin="0,0,10,10" Click="btnSave_Click" Height="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100"/>
+    </Grid>
+</Window>
