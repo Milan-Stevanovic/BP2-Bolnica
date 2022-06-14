@@ -8,7 +8,7 @@ CREATE TABLE Bolnica
 CREATE TABLE Zaposleni
 (
 	idZaposlenog INT IDENTITY(1,1) PRIMARY KEY,
-	jmbgZ VARCHAR(15) NOT NULL, -- ????????????????
+	jmbgZ VARCHAR(15) NOT NULL,
 	imeZ VARCHAR(255) NOT NULL,
 	prezimeZ VARCHAR(255) NOT NULL,
 	plataZ INT,
@@ -18,7 +18,7 @@ CREATE TABLE Zaposleni
 
 CREATE TABLE ZdravstveniRadnik
 (
-	idZaposlenog INT PRIMARY KEY FOREIGN KEY REFERENCES Zaposleni(idZaposlenog), -- ????????????????
+	idZaposlenog INT PRIMARY KEY FOREIGN KEY REFERENCES Zaposleni(idZaposlenog),
 	brojLicence INT,
 	tipZdrRad VARCHAR(255) NOT NULL,
 );
@@ -26,7 +26,7 @@ CREATE TABLE ZdravstveniRadnik
 CREATE TABLE Obezbedjenje
 (
 	idZaposlenog INT PRIMARY KEY FOREIGN KEY REFERENCES Zaposleni(idZaposlenog),
-	dozvolaZaOruzje BIT -- ????????????????
+	dozvolaZaOruzje BIT
 );
 
 CREATE TABLE Odeljenje
